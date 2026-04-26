@@ -560,7 +560,7 @@ Para este proyecto, una buena opción sería usar **SQLite**, ya que es simple, 
 
 ## 👨‍💻 Autor
 
-**Estudiate: Yoel Bulacia**
+**Estudiate: Yoel Bulacia**  
 [Ver mis proyectos](https://github.com/bulacia-yoel/)
 
 ---
