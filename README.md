@@ -192,9 +192,27 @@ Flask
 
 ---
 
-## 🚀 Instalación y ejecución
+## 🚀 Instalación y ejecución local
 
-### 1. Entrar a la carpeta del proyecto
+A continuación se explica cómo descargar, instalar y ejecutar el proyecto en una computadora local.
+
+---
+
+## 📥 Descargar el proyecto
+
+Existen dos formas principales de obtener el proyecto.
+
+---
+
+### Opción 1: Clonar el repositorio con Git
+
+Abrir una terminal y ejecutar:
+
+```bash
+git clone https://github.com/bulacia-yoel/calculator-bitwise.git
+```
+
+Luego entrar a la carpeta del proyecto:
 
 ```bash
 cd calculator-bitwise
@@ -202,17 +220,35 @@ cd calculator-bitwise
 
 ---
 
+### Opción 2: Descargar como archivo ZIP
+
+También se puede descargar el proyecto manualmente desde GitHub:
+
+```text
+1. Entrar al repositorio del proyecto.
+2. Presionar el botón verde "Code".
+3. Seleccionar "Download ZIP".
+4. Extraer el archivo ZIP descargado.
+5. Abrir una terminal dentro de la carpeta extraída.
+```
+
+---
+
 ## 🐍 Crear entorno virtual
 
-Se recomienda usar un entorno virtual para mantener las dependencias ordenadas.
+Se recomienda usar un entorno virtual para mantener las dependencias del proyecto separadas del sistema principal.
+
+---
 
 ### En Linux
+
+Crear el entorno virtual:
 
 ```bash
 python3 -m venv env
 ```
 
-Activar entorno virtual:
+Activar el entorno virtual:
 
 ```bash
 source env/bin/activate
@@ -221,6 +257,8 @@ source env/bin/activate
 ---
 
 ### En Windows
+
+Crear el entorno virtual:
 
 ```bash
 python -m venv env
@@ -238,7 +276,7 @@ Activar en PowerShell:
 env\Scripts\Activate.ps1
 ```
 
-Si PowerShell bloquea la activación, ejecutar:
+Si PowerShell bloquea la activación del entorno virtual, ejecutar:
 
 ```powershell
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
@@ -254,7 +292,7 @@ env\Scripts\Activate.ps1
 
 ## 📦 Instalar dependencias
 
-Con el entorno virtual activado:
+Con el entorno virtual activado, instalar las librerías necesarias:
 
 ```bash
 pip install -r requirements.txt
@@ -264,16 +302,43 @@ pip install -r requirements.txt
 
 ## ▶️ Ejecutar la aplicación
 
-Desde la raíz del proyecto:
+Desde la raíz del proyecto, ejecutar:
 
 ```bash
 python app.py
 ```
 
-Luego abrir en el navegador:
+Si todo está correcto, Flask levantará el servidor local.
+
+Luego abrir el navegador y entrar a:
 
 ```text
 http://127.0.0.1:5000
+```
+
+---
+
+## 🧪 Probar que funciona correctamente
+
+Para comprobar que la aplicación está funcionando, se pueden probar operaciones como:
+
+```text
+5 AND 3
+5 OR 3
+5 XOR 3
+NOT 5 con 4 bits
+5 << 1
+5 >> 1
+```
+
+---
+
+## ⛔ Detener el servidor
+
+Para detener el servidor Flask desde la terminal, presionar:
+
+```text
+CTRL + C
 ```
 
 ---
@@ -560,7 +625,7 @@ Para este proyecto, una buena opción sería usar **SQLite**, ya que es simple, 
 
 ## 👨‍💻 Autor
 
-**Estudiate: Yoel Bulacia**  
+**Estudiante: Yoel Bulacia**  
 [Ver mis proyectos](https://github.com/bulacia-yoel/)
 
 ---
@@ -568,6 +633,7 @@ Para este proyecto, una buena opción sería usar **SQLite**, ya que es simple, 
 <div align="center">
 
 ### 🧮 Calculadora Bitwise
+
 Código ordenado, interfaz minimalista y lógica separada por clases.
 
 </div>
