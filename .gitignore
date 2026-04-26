@@ -1,1 +1,23 @@
+# Entorno virtual
 env/
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Configuración de editores
+.vscode/
+.idea/
+
+# Base de datos futura
+*.db
+
+# Variables de entorno
+.env

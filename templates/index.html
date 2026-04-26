@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Bitwise</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/styles.css') }}"
+    >
+</head>
+<body>
+    <main class="page-container">
+        <section class="calculator-card">
+            <header class="header">
+                <h1>Calculadora Bitwise</h1>
+                <p>
+                    Realiza operaciones AND, OR, XOR, NOT y desplazamientos
+                    de bits de forma rápida y ordenada.
+                </p>
+            </header>
+
+            <form class="calculator-form" method="POST">
+                <div class="form-group">
+                    <label for="first_number">Primer número</label>
+                    <input
+                        type="number"
+                        id="first_number"
+                        name="first_number"
+                        placeholder="Ejemplo: 5"
+                        value="{{ form_data.first_number }}"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="operation">Operación</label>
+                    <select id="operation" name="operation" required>
+                        <option
+                            value="and"
+                            {% if form_data.operation == "and" %}selected{% endif %}
+                        >
+                            AND
+                        </option>
+
+                        <option
+                            value="or"
+                            {% if form_data.operation == "or" %}selected{% endif %}
+                        >
+                            OR
+                        </option>
+
+                        <option
+                            value="xor"
+                            {% if form_data.operation == "xor" %}selected{% endif %}
+                        >
+                            XOR
+                        </option>
+
+                        <option
+                            value="not"
+                            {% if form_data.operation == "not" %}selected{% endif %}
+                        >
+                            NOT
+                        </option>
+
+                        <option
+                            value="left_shift"
+                            {% if form_data.operation == "left_shift" %}
+                                selected
+                            {% endif %}
+                        >
+                            Desplazamiento izquierda
+                        </option>
+
+                        <option
+                            value="right_shift"
+                            {% if form_data.operation == "right_shift" %}
+                                selected
+                            {% endif %}
+                        >
+                            Desplazamiento derecha
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="second-number-group">
+                    <label for="second_number" id="second-number-label">
+                        Segundo número
+                    </label>
+                    <input
+                        type="number"
+                        id="second_number"
+                        name="second_number"
+                        placeholder="Ejemplo: 3"
+                        value="{{ form_data.second_number }}"
+                    >
+                    <small id="second-number-help">
+                        Necesario para AND, OR, XOR y desplazamientos.
+                    </small>
+                </div>
+
+                <div class="form-group" id="bit-width-group">
+                    <label for="bit_width">Cantidad de bits para NOT</label>
+                    <input
+                        type="number"
+                        id="bit_width"
+                        name="bit_width"
+                        value="{{ form_data.bit_width }}"
+                        min="1"
+                        required
+                    >
+                    <small>
+                        Por defecto se usa 8 bits.
+                    </small>
+                </div>
+
+                <button class="calculate-button" type="submit">
+                    Calcular
+                </button>
+            </form>
+
+            {% if result_decimal is not none %}
+                <section class="result-card">
+                    <h2>Resultado</h2>
+
+                    <div class="result-row">
+                        <span>Decimal</span>
+                        <strong>{{ result_decimal }}</strong>
+                    </div>
+
+                    <div class="result-row">
+                        <span>Binario</span>
+                        <strong>{{ result_binary }}</strong>
+                    </div>
+                </section>
+            {% endif %}
+
+            {% if error_message %}
+                <section class="error-card">
+                    <h2>Error</h2>
+                    <p>{{ error_message }}</p>
+                </section>
+            {% endif %}
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
