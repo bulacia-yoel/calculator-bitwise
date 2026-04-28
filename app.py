@@ -1,6 +1,6 @@
 from flask import Flask
 
-from routes.main_routes import main_routes
+from controllers.main_routes import main_routes
 
 
 def create_app():

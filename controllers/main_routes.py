@@ -8,8 +8,8 @@ y procesa las operaciones bitwise enviadas por el usuario.
 from flask import Blueprint, render_template, request
 
 from models.bitwise_calculator import BitwiseCalculator
-from services.bitwise_service import calculate_bitwise_operation
-from utils.form_helpers import get_integer_from_form, get_default_form_data
+from controllers.bitwise_service import calculate_bitwise_operation
+from controllers.form_helpers import get_integer_from_form, get_default_form_data
 
 
 main_routes = Blueprint("main_routes", __name__)
