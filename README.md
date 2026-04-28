@@ -20,7 +20,9 @@
 
 El objetivo del proyecto es permitir al usuario realizar operaciones bitwise sobre números enteros mediante una interfaz web simple, ordenada, minimalista y funcional.
 
-Este proyecto separa correctamente la lógica del programa, la vista del usuario y los archivos estáticos, siguiendo una estructura limpia y fácil de mantener.
+El proyecto está organizado por responsabilidades, separando el arranque de Flask, las rutas, la lógica de operaciones, las validaciones del formulario, la interfaz HTML y los archivos estáticos.
+
+Esto permite que el código sea más limpio, más fácil de mantener y más fácil de explicar.
 
 ---
 
@@ -63,9 +65,25 @@ La calculadora permite realizar las siguientes operaciones:
 ```text
 calculator-bitwise/
 │
+├── app.py
+├── requirements.txt
+├── README.md
+│
 ├── models/
 │   ├── __init__.py
 │   └── bitwise_calculator.py
+│
+├── routes/
+│   ├── __init__.py
+│   └── main_routes.py
+│
+├── services/
+│   ├── __init__.py
+│   └── bitwise_service.py
+│
+├── utils/
+│   ├── __init__.py
+│   └── form_helpers.py
 │
 ├── templates/
 │   └── index.html
@@ -77,31 +95,78 @@ calculator-bitwise/
 │   └── js/
 │       └── main.js
 │
-├── tests/
-│   └── test_bitwise_calculator.py
-│
-├── app.py
-├── requirements.txt
-└── README.md
+└── tests/
+    └── test_bitwise_calculator.py
 ```
 
 ---
 
-## 🧩 Función de cada archivo
+## 🧩 Función de cada archivo y carpeta
 
 ### `app.py`
 
-Archivo principal del proyecto.
+Archivo principal de arranque del proyecto.
 
 Se encarga de:
 
 - Crear la aplicación Flask.
-- Levantar el servidor.
-- Definir la ruta principal.
+- Registrar las rutas principales mediante Blueprints.
+- Levantar el servidor cuando se ejecuta el proyecto.
+
+Este archivo se mantiene limpio para que no contenga demasiada lógica.
+
+---
+
+### `routes/main_routes.py`
+
+Contiene las rutas principales de la aplicación web.
+
+Se encarga de:
+
+- Mostrar la página principal.
 - Recibir los datos enviados desde el formulario.
-- Validar los datos ingresados.
-- Conectar la vista HTML con la lógica de Python.
-- Enviar el resultado nuevamente al navegador.
+- Mantener los datos escritos por el usuario.
+- Llamar a las funciones de validación.
+- Llamar al servicio que ejecuta la operación bitwise.
+- Enviar el resultado decimal y binario hacia el HTML.
+- Mostrar mensajes de error cuando los datos ingresados son incorrectos.
+
+---
+
+### `services/bitwise_service.py`
+
+Contiene la lógica que conecta la operación seleccionada por el usuario con la calculadora.
+
+Se encarga de decidir qué método ejecutar según la operación elegida:
+
+- `and`
+- `or`
+- `xor`
+- `not`
+- `left_shift`
+- `right_shift`
+
+Este archivo ayuda a que la ruta no tenga demasiada lógica interna.
+
+---
+
+### `utils/form_helpers.py`
+
+Contiene funciones auxiliares para trabajar con formularios.
+
+Se encarga de:
+
+- Obtener valores enviados desde el formulario.
+- Validar que los campos no estén vacíos.
+- Convertir los datos recibidos a números enteros.
+- Generar los valores por defecto del formulario.
+
+Incluye funciones como:
+
+```python
+get_integer_from_form()
+get_default_form_data()
+```
 
 ---
 
@@ -124,6 +189,14 @@ Incluye métodos para:
 - `left_shift()`
 - `right_shift()`
 - `to_binary()`
+
+El método `to_binary()` convierte el resultado decimal a binario sin mostrar el prefijo `0b`.
+
+Ejemplo:
+
+```text
+5 = 101
+```
 
 ---
 
@@ -379,7 +452,7 @@ Resultado:
 
 ```text
 Decimal: 1
-Binario: 0b1
+Binario: 1
 ```
 
 Explicación:
@@ -405,7 +478,7 @@ Resultado:
 
 ```text
 Decimal: 7
-Binario: 0b111
+Binario: 111
 ```
 
 Explicación:
@@ -431,7 +504,7 @@ Resultado:
 
 ```text
 Decimal: 6
-Binario: 0b110
+Binario: 110
 ```
 
 Explicación:
@@ -457,7 +530,7 @@ Resultado:
 
 ```text
 Decimal: 10
-Binario: 0b1010
+Binario: 1010
 ```
 
 Explicación:
@@ -482,7 +555,7 @@ Resultado:
 
 ```text
 Decimal: 10
-Binario: 0b1010
+Binario: 1010
 ```
 
 Explicación:
@@ -507,7 +580,7 @@ Resultado:
 
 ```text
 Decimal: 2
-Binario: 0b10
+Binario: 10
 ```
 
 Explicación:
@@ -539,22 +612,25 @@ La aplicación valida que:
 Usuario ingresa datos en el formulario
                 │
                 ▼
-Flask recibe los datos en app.py
+Flask recibe la petición en routes/main_routes.py
                 │
                 ▼
-app.py valida los datos
+utils/form_helpers.py valida los datos del formulario
                 │
                 ▼
-Se llama a la clase BitwiseCalculator
+services/bitwise_service.py decide qué operación ejecutar
                 │
                 ▼
-Se realiza la operación bitwise
+models/bitwise_calculator.py realiza la operación bitwise
+                │
+                ▼
+routes/main_routes.py recibe el resultado
                 │
                 ▼
 Flask envía el resultado al HTML
                 │
                 ▼
-El usuario visualiza el resultado
+El usuario visualiza el resultado en la interfaz
 ```
 
 ---
@@ -567,7 +643,9 @@ Se aplican criterios como:
 
 - Código separado por responsabilidades.
 - Uso de clases para la lógica principal.
-- Uso de funciones auxiliares.
+- Uso de Blueprints para organizar rutas.
+- Uso de servicios para separar la lógica de ejecución.
+- Uso de funciones auxiliares para validaciones.
 - Nombres descriptivos.
 - Comentarios claros.
 - Docstrings en clases y funciones.
@@ -578,35 +656,6 @@ Se aplican criterios como:
 
 ---
 
-## 🗃️ Mejora futura: Base de datos
-
-Como mejora opcional, se puede agregar una base de datos para guardar el historial de operaciones realizadas.
-
-Una posible estructura futura sería:
-
-```text
-calculator-bitwise/
-│
-├── database/
-│   ├── connection.py
-│   └── calculator.db
-```
-
-La base de datos podría guardar información como:
-
-```text
-Operación: AND
-Primer número: 5
-Segundo número: 3
-Resultado decimal: 1
-Resultado binario: 0b1
-Fecha de creación: 2026-04-26
-```
-
-Para este proyecto, una buena opción sería usar **SQLite**, ya que es simple, ligera y adecuada para proyectos académicos pequeños.
-
----
-
 ## 📊 Estado actual del proyecto
 
 | Fase | Estado |
@@ -614,6 +663,9 @@ Para este proyecto, una buena opción sería usar **SQLite**, ya que es simple, 
 | Estructura base | ✅ Completado |
 | Servidor Flask | ✅ Completado |
 | Lógica bitwise | ✅ Completado |
+| Organización con rutas | ✅ Completado |
+| Separación en servicios | ✅ Completado |
+| Funciones auxiliares | ✅ Completado |
 | Conexión Flask + lógica | ✅ Completado |
 | Interfaz visual | ✅ Completado |
 | Validaciones básicas | ✅ Completado |
@@ -625,7 +677,8 @@ Para este proyecto, una buena opción sería usar **SQLite**, ya que es simple, 
 
 ## 👨‍💻 Autor
 
-**Estudiante: Yoel Bulacia**  
+**Estudiante: Yoel Bulacia**
+
 [Ver mis proyectos](https://github.com/bulacia-yoel/)
 
 ---
@@ -634,6 +687,6 @@ Para este proyecto, una buena opción sería usar **SQLite**, ya que es simple, 
 
 ### 🧮 Calculadora Bitwise
 
-Código ordenado, interfaz minimalista y lógica separada por clases.
+Código ordenado, interfaz minimalista y lógica separada por responsabilidades.
 
 </div>

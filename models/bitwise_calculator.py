@@ -162,4 +162,4 @@ class BitwiseCalculator:
         """
         self.validate_integer(number)
 
-        return bin(number)
+        return format(number, "b")
